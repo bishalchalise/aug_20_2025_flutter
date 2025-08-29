@@ -51,8 +51,17 @@ class SupabaseAuthDataSourceImpl
   Future<UserModel> loginWithEmailPassword({
     required String email,
     required String password,
-  }) {
-    // Implementation for logging in with Firebase
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await supabaseClient.auth
+          .signInWithPassword(email: email, password: password);
+
+      if (response.user == null) {
+        throw ServerException("User can not be Found");
+      }
+      return UserModel.fromJson(response.user!.toJson());
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 }
