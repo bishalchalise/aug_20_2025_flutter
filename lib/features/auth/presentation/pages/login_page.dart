@@ -1,5 +1,6 @@
 // features/auth/presentation/pages/login_page.dart
 // features/auth/presentation/pages/signup_page.dart
+import 'package:aug_20_2025/core/common/widgets/loader.dart';
 import 'package:aug_20_2025/core/theme/app_pallete.dart';
 import 'package:aug_20_2025/core/utils/show_snakbar.dart';
 import 'package:aug_20_2025/features/auth/presentation/bloc/auth_bloc.dart';
@@ -41,11 +42,14 @@ class _LoginPageState extends State<LoginPage> {
             } else if (state is AuthSuccess) {
               showSnackbar(
                 context,
-                "Account Logged In successfully! with name of : ${state.user.id.toString()}",
+                "${state.user.name} is Logged In!",
               );
             }
           },
           builder: (context, state) {
+            if (state is AuthLoading) {
+              return const Loader();
+            }
             return Form(
               key: _formKey,
               child: Column(
@@ -79,12 +83,6 @@ class _LoginPageState extends State<LoginPage> {
                             email: emailCOntroller.text.trim(),
                             password: passwordController.text
                                 .trim(),
-                          ),
-                        );
-                        Navigator.of(context).push(
-                          MaterialPageRoute<void>(
-                            builder: (context) =>
-                                const Scaffold(),
                           ),
                         );
                       }

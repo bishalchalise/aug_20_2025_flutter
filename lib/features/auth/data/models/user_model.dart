@@ -1,6 +1,6 @@
 // features/auth/data/models/user_model.dart
 
-import 'package:aug_20_2025/features/auth/domain/entities/user_entity.dart';
+import 'package:aug_20_2025/core/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   UserModel({
@@ -19,5 +19,13 @@ class UserModel extends UserEntity {
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'name': name, 'email': email};
+  }
+
+  UserModel copyWith({String? id, String? email, String? name}) {
+    return UserModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      name: name ?? this.name,
+    );
   }
 }

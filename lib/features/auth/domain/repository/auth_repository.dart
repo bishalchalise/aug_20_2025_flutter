@@ -1,6 +1,6 @@
 // features/auth/domain/repository/auth_repository.dart
 import 'package:aug_20_2025/core/errors/failures.dart';
-import 'package:aug_20_2025/features/auth/domain/entities/user_entity.dart';
+import 'package:aug_20_2025/core/entities/user_entity.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class AuthRepository {
@@ -14,4 +14,7 @@ abstract interface class AuthRepository {
     required String email,
     required String password,
   });
+
+  Future<Either<Failure, UserEntity>> currentUser();
+  Future<Either<Failure, Unit>> signOut();
 }

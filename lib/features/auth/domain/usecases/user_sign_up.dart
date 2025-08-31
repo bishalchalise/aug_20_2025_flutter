@@ -2,7 +2,7 @@
 
 import 'package:aug_20_2025/core/errors/failures.dart';
 import 'package:aug_20_2025/core/usecase/usecase.dart';
-import 'package:aug_20_2025/features/auth/domain/entities/user_entity.dart';
+import 'package:aug_20_2025/core/entities/user_entity.dart';
 import 'package:aug_20_2025/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
