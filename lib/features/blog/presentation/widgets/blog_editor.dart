@@ -20,6 +20,12 @@ class BlogEditor extends StatelessWidget {
         hintText: hintText,
         border: InputBorder.none,
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'This field cannot be empty';
+        }
+        return null;
+      },
     );
   }
 }

@@ -1,6 +1,7 @@
 // features/auth/data/repositories/auth_repository_impl.dart
 import 'package:aug_20_2025/core/errors/exceptions.dart';
 import 'package:aug_20_2025/core/errors/failures.dart';
+import 'package:aug_20_2025/core/network/connection_checker.dart';
 import 'package:aug_20_2025/features/auth/data/datasources/supabase_auth_datasource.dart';
 import 'package:aug_20_2025/core/entities/user_entity.dart';
 import 'package:aug_20_2025/features/auth/domain/repository/auth_repository.dart';
@@ -9,11 +10,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final SupabaseAuthDatasource supabaseAuthDatasource;
-  AuthRepositoryImpl(this.supabaseAuthDatasource);
-
+  final ConnectionChecker connectionChecker;
+  AuthRepositoryImpl(
+    this.supabaseAuthDatasource,
+    this.connectionChecker,
+  );
   @override
   Future<Either<Failure, UserEntity>> currentUser() async {
     try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure("No internet connection"));
+      }
       final user = await supabaseAuthDatasource
           .getCurrentuSerData();
       if (user == null) {
@@ -74,6 +81,9 @@ class AuthRepositoryImpl implements AuthRepository {
     Future<UserEntity> Function() fn,
   ) async {
     try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure("No internet connection"));
+      }
       final user = await fn();
 
       return right(user);
