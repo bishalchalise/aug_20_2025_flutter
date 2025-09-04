@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:aug_20_2025/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:aug_20_2025/core/common/widgets/loader.dart';
+import 'package:aug_20_2025/core/constants/constatns.dart';
 import 'package:aug_20_2025/core/theme/app_pallete.dart';
 import 'package:aug_20_2025/core/utils/pick_image.dart';
 import 'package:aug_20_2025/core/utils/show_snakbar.dart';
@@ -159,65 +160,43 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children:
-                            [
-                                  "Technology",
-                                  "Business",
-                                  "Sports",
-                                  "Nature",
-                                  "Politics",
-                                  "Science",
-                                  "Travel",
-                                  "Food",
-                                  "Entertainment",
-                                  "Health",
-                                  "Education",
-                                  "Lifestyle",
-                                  "Fashion",
-                                  "Art",
-                                  "History",
-                                ]
-                                .map(
-                                  (e) => Padding(
-                                    padding:
-                                        const EdgeInsets.all(
-                                          5.0,
-                                        ),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        if (selectedChips
-                                            .contains(e)) {
-                                          selectedChips.remove(
-                                            e,
-                                          );
-                                        } else {
-                                          selectedChips.add(e);
-                                        }
-                                        setState(() {});
-                                      },
-                                      child: Chip(
-                                        label: Text(e),
-                                        color:
-                                            selectedChips
-                                                .contains(e)
-                                            ? WidgetStatePropertyAll(
-                                                AppPallete
-                                                    .gradient1,
-                                              )
-                                            : null,
-                                        side:
-                                            selectedChips
-                                                .contains(e)
-                                            ? null
-                                            : BorderSide(
-                                                color: AppPallete
-                                                    .borderColor,
-                                              ),
-                                      ),
-                                    ),
+                        children: Constatns.topics
+                            .map(
+                              (e) => Padding(
+                                padding: const EdgeInsets.all(
+                                  5.0,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (selectedChips.contains(
+                                      e,
+                                    )) {
+                                      selectedChips.remove(e);
+                                    } else {
+                                      selectedChips.add(e);
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: Chip(
+                                    label: Text(e),
+                                    color:
+                                        selectedChips.contains(e)
+                                        ? WidgetStatePropertyAll(
+                                            AppPallete.gradient1,
+                                          )
+                                        : null,
+                                    side:
+                                        selectedChips.contains(e)
+                                        ? null
+                                        : BorderSide(
+                                            color: AppPallete
+                                                .borderColor,
+                                          ),
                                   ),
-                                )
-                                .toList(),
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ),
                     ),
                     SizedBox(height: 20),

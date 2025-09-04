@@ -5,6 +5,7 @@ import 'package:aug_20_2025/core/utils/show_snakbar.dart';
 import 'package:aug_20_2025/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:aug_20_2025/features/auth/presentation/widgets/auth_field.dart';
 import 'package:aug_20_2025/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:aug_20_2025/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,11 +44,11 @@ class _SignupPageState extends State<SignupPage> {
             if (state is AuthFailure) {
               showSnackbar(context, state.message);
             } else if (state is AuthSuccess) {
-              showSnackbar(
+              Navigator.pushAndRemoveUntil(
                 context,
-                "Account created successfully! with name of : ${state.user.id.toString()}",
+                BlogPage.route(),
+                (route) => false,
               );
-              Navigator.pop(context);
             }
           },
           builder: (context, state) {

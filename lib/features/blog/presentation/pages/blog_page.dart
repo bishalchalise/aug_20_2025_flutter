@@ -1,6 +1,5 @@
 // features/blog/presentation/pages/blog_page.dart
 import 'package:aug_20_2025/core/common/widgets/loader.dart';
-import 'package:aug_20_2025/core/theme/app_pallete.dart';
 import 'package:aug_20_2025/core/utils/show_snakbar.dart';
 import 'package:aug_20_2025/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:aug_20_2025/features/blog/presentation/pages/add_new_blog_page.dart';
@@ -55,9 +54,11 @@ class _BlogPageState extends State<BlogPage> {
               itemBuilder: (context, index) {
                 final blog = state.blogs[index];
                 return BlogCard(
-                  color: index % 2 == 0
-                      ? AppPallete.gradient1
-                      : AppPallete.gradient2,
+                  color: index % 3 == 0
+                      ? Colors.teal
+                      : index % 3 == 1
+                      ? Colors.cyan
+                      : Colors.yellowAccent,
                   blog: blog,
                 );
               },

@@ -7,6 +7,7 @@ import 'package:aug_20_2025/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:aug_20_2025/features/auth/presentation/pages/signup_page.dart';
 import 'package:aug_20_2025/features/auth/presentation/widgets/auth_field.dart';
 import 'package:aug_20_2025/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:aug_20_2025/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,9 +41,10 @@ class _LoginPageState extends State<LoginPage> {
             if (state is AuthFailure) {
               showSnackbar(context, state.message);
             } else if (state is AuthSuccess) {
-              showSnackbar(
+              Navigator.pushAndRemoveUntil(
                 context,
-                "${state.user.name} is Logged In!",
+                BlogPage.route(),
+                (route) => false,
               );
             }
           },

@@ -69,8 +69,6 @@ class SupabaseAuthDataSourceImpl
       if (response.user == null) {
         throw ServerException("User can not be Found");
       }
-      print("Login successful: ${response.session} ,  }");
-
       return UserModel.fromJson(response.user!.toJson());
     } catch (e) {
       throw ServerException(e.toString());

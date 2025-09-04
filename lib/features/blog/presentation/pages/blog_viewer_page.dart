@@ -4,12 +4,14 @@ import 'package:aug_20_2025/core/theme/app_pallete.dart';
 import 'package:aug_20_2025/core/utils/calculate_reading_time.dart';
 import 'package:aug_20_2025/core/utils/format_date.dart';
 import 'package:aug_20_2025/features/blog/domain/entities/blog_entities.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BlogViewerPage extends StatelessWidget {
-  static route(BlogEntities blog) => MaterialPageRoute(
-    builder: (context) => BlogViewerPage(blog: blog),
-  );
+  static MaterialPageRoute route(BlogEntities blog) =>
+      MaterialPageRoute(
+        builder: (context) => BlogViewerPage(blog: blog),
+      );
   final BlogEntities blog;
   const BlogViewerPage({super.key, required this.blog});
 
@@ -49,9 +51,30 @@ class BlogViewerPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
+
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(blog.imageUrl),
+                  child: CachedNetworkImage(
+                    imageUrl: blog.imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Container(
+                      height: 150,
+                      color: Colors.grey[300],
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Container(
+                          height: 150,
+                          color: Colors.grey[300],
+                          child: Icon(
+                            Icons.image,
+                            size: 50,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Text(

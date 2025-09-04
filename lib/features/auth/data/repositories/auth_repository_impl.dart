@@ -1,9 +1,11 @@
 // features/auth/data/repositories/auth_repository_impl.dart
+import 'package:aug_20_2025/core/constants/constatns.dart';
 import 'package:aug_20_2025/core/errors/exceptions.dart';
 import 'package:aug_20_2025/core/errors/failures.dart';
 import 'package:aug_20_2025/core/network/connection_checker.dart';
 import 'package:aug_20_2025/features/auth/data/datasources/supabase_auth_datasource.dart';
 import 'package:aug_20_2025/core/entities/user_entity.dart';
+import 'package:aug_20_2025/features/auth/data/models/user_model.dart';
 import 'package:aug_20_2025/features/auth/domain/repository/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,8 +21,21 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, UserEntity>> currentUser() async {
     try {
       if (!await connectionChecker.isConnected) {
-        return left(Failure("No internet connection"));
+        final session =
+            supabaseAuthDatasource.currentUserSession;
+        if (session == null) {
+          return left(Failure("User is not logged in"));
+        }
+
+        return right(
+          UserModel(
+            id: session.user.id,
+            name: "",
+            email: session.user.email ?? "",
+          ),
+        );
       }
+
       final user = await supabaseAuthDatasource
           .getCurrentuSerData();
       if (user == null) {
@@ -82,7 +97,7 @@ class AuthRepositoryImpl implements AuthRepository {
   ) async {
     try {
       if (!await connectionChecker.isConnected) {
-        return left(Failure("No internet connection"));
+        return left(Failure(Constatns.noConnectionErrorMessage));
       }
       final user = await fn();
 
